@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class UpdateTrip {
     private JFormattedTextField departureDateField;
@@ -27,14 +28,26 @@ public class UpdateTrip {
                 String departureDate = departureDateField.getText();
                 String arrivalDate = arrivalDateField.getText();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-                LocalDate parsedDepartureDate = LocalDate.parse(departureDate, formatter);
-                LocalDate parsedArrivalDate = LocalDate.parse(arrivalDate, formatter);
-                if (parsedDepartureDate.isAfter(parsedArrivalDate)) {
-                    JOptionPane.showMessageDialog(mainPanel, "Arrival date cannot be before departure date", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    trip.setDepartureDate(parsedDepartureDate);
-                    trip.setArrivalDate(parsedArrivalDate);
-                    DataManager.updateTrip(trip);
+                LocalDate parsedDepartureDate = null;
+                LocalDate parsedArrivalDate = null;
+                boolean validDate = false;
+                try {
+                    parsedDepartureDate = LocalDate.parse(departureDate, formatter);
+                    parsedArrivalDate = LocalDate.parse(arrivalDate, formatter);
+                    validDate = true;
+                } catch (DateTimeParseException exception) {
+                    JOptionPane.showMessageDialog(mainPanel, "Invalid date input must be(yyyy/MM/dd)", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+                if (validDate) {
+                    if (parsedDepartureDate.isAfter(parsedArrivalDate)) {
+                        JOptionPane.showMessageDialog(mainPanel, "Arrival date cannot be before departure date", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        trip.setDepartureDate(parsedDepartureDate);
+                        trip.setArrivalDate(parsedArrivalDate);
+                        DataManager.updateTrip(trip);
+                        JOptionPane.showMessageDialog(mainPanel, "Trip updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
             }
         });

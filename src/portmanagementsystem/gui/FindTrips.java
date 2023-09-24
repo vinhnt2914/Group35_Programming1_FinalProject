@@ -87,13 +87,9 @@ public class FindTrips implements PanelAction{
             } else {
                 String startDateText = startDateField.getText();
                 String endDateText = endDateField.getText();
-                System.out.println(startDateText);
-                System.out.println(endDateText);
                 if ((!startDateText.isEmpty() && !endDateText.isEmpty() && !startDateText.contains("_") && !endDateText.contains("_"))) {
-                    System.out.println("run1");
                     updateListView(startDateText, endDateText);
                 } else {
-                    System.out.println("run3");
                     JOptionPane.showMessageDialog(mainPanel, "Please enter both start and end dates for the date range.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -148,7 +144,7 @@ public class FindTrips implements PanelAction{
             // Create a new DefaultListModel and add trips that match the date range
             DefaultListModel<Trip> filteredListModel = new DefaultListModel<>();
             for (Trip trip : DataManager.getTripList()) {
-                if (!trip.getArrivalDate().isBefore(parsedStartDate) && !trip.getArrivalDate().isAfter(parsedEndDate)) {
+                if (!trip.getDepartureDate().isBefore(parsedStartDate) && !trip.getArrivalDate().isAfter(parsedEndDate)) {
                     filteredListModel.addElement(trip);
                 }
             }
