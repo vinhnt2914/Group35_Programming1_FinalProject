@@ -1,15 +1,11 @@
 package portmanagementsystem;
 
 import portmanagementsystem.gui.LoginFrame;
-import portmanagementsystem.gui.LoginScreen;
-import portmanagementsystem.gui.WelcomeScreen;
-import portmanagementsystem.models.Trip;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
-public class Test {
+public class Main {
     private static JFrame mainFrame;
     private static CardLayout cardLayout;
     private static JPanel cardPanel;

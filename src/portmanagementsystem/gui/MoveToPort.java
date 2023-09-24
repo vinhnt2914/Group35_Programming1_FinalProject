@@ -47,7 +47,7 @@ public class MoveToPort{
 
         vehicleIDLabel.setText("Vehicle ID: " + vehicle.getId());
         vehicleNameLabel.setText("Vehicle Name: " + vehicle.getName());
-        vehicleTypeLabel.setText("Vehicle Name: " + vehicle.getVehicleType());
+        vehicleTypeLabel.setText("Vehicle Type: " + vehicle.getVehicleType());
         currentFieldLabel.setText("Current Field: " + vehicle.getCurrentFuel());
         portIDLabel.setText("Port ID: " + vehicle.getCurrentPort().getId());
         portNameLabel.setText("Port Name: " + vehicle.getCurrentPort().getName());

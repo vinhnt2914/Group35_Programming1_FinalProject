@@ -29,6 +29,7 @@ public class AddContainersToVehicle{
                 // Check if loadContainer function is true or false. If true remove container from listView
                 if (vehicle.loadContainer(listView.getSelectedValue())) {
                     containerListModel.removeElement(listView.getSelectedValue());
+                    load(vehicle);
                 }
             }
         });
@@ -52,7 +53,7 @@ public class AddContainersToVehicle{
 
         vehicleIDLabel.setText("Vehicle ID: " + vehicle.getId());
         vehicleNameLabel.setText("Vehicle Name: " + vehicle.getName());
-        vehicleTypeLabel.setText("Vehicle Name: " + vehicle.getVehicleType());
-        currentFuelLabel.setText("Vehicle Name: " + vehicle.getCurrentFuel());
+        vehicleTypeLabel.setText("Vehicle Type: " + vehicle.getVehicleType());
+        currentFuelLabel.setText("Remain Capacity: " + vehicle.getRemainingCapacity());
     }
 }

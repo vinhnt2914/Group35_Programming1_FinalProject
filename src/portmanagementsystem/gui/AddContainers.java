@@ -93,7 +93,7 @@ public class AddContainers implements PanelAction{
             public void actionPerformed(ActionEvent e) {
                 // Check if user enters nothing
                 if (containerWeightField.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Container Weight can not be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(mainPanel, "Container Weight can not be empty", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
                     double containerWeight;
@@ -103,7 +103,7 @@ public class AddContainers implements PanelAction{
                         Container.ContainerType containerType = (Container.ContainerType) containerTypeBox.getSelectedItem();
                         // Alert if user didn't choose a port
                         if (containerWeight > controlPort.getRemainingCapacity()) {
-                            JOptionPane.showMessageDialog(null, "This port doesn't have enough storage!", "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(mainPanel, "This port doesn't have enough storage!", "Error", JOptionPane.ERROR_MESSAGE);
                         } else {
                             int indexPort = DataManager.getPortList().indexOf(controlPort);
                             Container container = new Container(containerWeight, containerType, controlPort);
@@ -114,7 +114,7 @@ public class AddContainers implements PanelAction{
                             try {
                                 DataManager.writePorts();
                                 DataManager.writeContainers();
-                                JOptionPane.showMessageDialog(null, "Container has been added!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                                JOptionPane.showMessageDialog(mainPanel, "Container has been added!", "Success", JOptionPane.INFORMATION_MESSAGE);
                                 load();
                             } catch (IOException ex) {
                                 System.out.println("Write unsuccessful");

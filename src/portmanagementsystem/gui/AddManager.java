@@ -47,16 +47,16 @@ public class AddManager {
                         DataManager.updatePort(port);
                         try {
                             DataManager.writeManagers();
-                            JOptionPane.showMessageDialog(null, "Manager created!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(mainPanel, "Manager created!", "Success", JOptionPane.INFORMATION_MESSAGE);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Username is already in used!", "Failed", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(mainPanel, "Username is already in used!", "Failed", JOptionPane.ERROR_MESSAGE);
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "This port already have a manager!", "Failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(mainPanel, "This port already have a manager!", "Failed", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

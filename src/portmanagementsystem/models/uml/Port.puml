@@ -89,7 +89,7 @@ package portmanagementsystem.models {
 
 
 
-abstract class Vehicle implements Serializable, VehicleAction {
+abstract class Vehicle implements Serializable, VehicleAction{
         - id: String
         - vehicleType: String
         - name: String

@@ -55,7 +55,7 @@ public class LoginFrame {
         messagePanel.add(new JLabel("COSC2081 GROUP ASSIGNMENT"));
         messagePanel.add(new JLabel("CONTAINER PORT MANAGEMENT SYSTEM"));
         messagePanel.add(new JLabel("Instructors: Mr. Minh Vu & Dr. Phong Ngo"));
-        messagePanel.add(new JLabel("Group: group27"));
+        messagePanel.add(new JLabel("Group: Group 35"));
         messagePanel.add(new JLabel("s3979366, Nguyen The Vinh"));
         messagePanel.add(new JLabel("s3978365, Pham Thanh Mai"));
         messagePanel.add(new JLabel("s3975154, Nguyen Ba Lam Quang Thai"));

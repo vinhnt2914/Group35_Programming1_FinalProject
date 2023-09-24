@@ -24,8 +24,8 @@ public class LoginScreen {
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
+                String username = usernameField.getText().trim();
+                String password = new String(passwordField.getPassword()).trim();
 
                 if (username.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Username cannot be empty", "Error", JOptionPane.ERROR_MESSAGE);
