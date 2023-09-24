@@ -1,0 +1,221 @@
+@startuml CombinedDiagram
+
+package portmanagementsystem.models {
+    class Port implements Serializable{
+        - id: String
+                - name: String
+                - latitude: double
+                - longitude: double
+                - storingCapacity: double
+                - landingAbility: boolean
+                - numberOfContainers: int
+                - numberOfVehicles: int
+                - listOfContainers: List<Container>
+                - listOfVehicles: List<Vehicle>
+                - manager: Manager
+                - remainingCapacity: double
+                + Port(name: String, latitude: double, longitude: double, storingCapacity: double, landingAbility: boolean)
+                + canLoadContainers(): boolean
+                + calculateDistance(port1: Port, port2: Port): double
+                + getContainersAsString(): String
+                + getVehiclesAsString(): String
+                + getManagerIDAsString(): String
+                + getId(): String
+                + getName(): String
+                + getLatitude(): double
+                + getLongitude(): double
+                + getStoringCapacity(): double
+                + isLandable(): boolean
+                + getNumberOfContainers(): int
+                + getNumberOfVehicles(): int
+                + getListOfContainers(): List<Container>
+                + getListOfVehicles(): List<Vehicle>
+                + getManager(): Manager
+                + getRemainingCapacity(): double
+                + setId(id: String): void
+                + setName(name: String): void
+                + setLatitude(latitude: double): void
+                + setLongitude(longitude: double): void
+                + setStoringCapacity(storingCapacity: double): void
+                + setLandingAbility(landingAbility: boolean): void
+                + setNumberOfContainers(numberOfContainers: int): void
+                + addNumberOfContainer(number: int): void
+                + minusNumberOfContainer(number: int): void
+                + setNumberOfVehicles(numberOfVehicles: int): void
+                + addNumberOfVehicle(number: int): void
+                + minusNumberOfVehicle(number: int): void
+                + setManager(manager: Manager): void
+                + setRemainingCapacity(remainingCapacity: double): void
+                + calculateRemainingCapacity(amount: double): void
+    }
+
+    class Container implements Serializable{
+        - id: String
+        - weight: double
+        - type: ContainerType
+        - currentPort: Port
+        + Container(weight: double, type: ContainerType, currentPort: Port)
+        + getConsumptionRate(vehicleType: VehicleType): double
+        + getFuelConsumption(vehicleType: VehicleType): double
+        + getId(): String
+        + getWeight(): double
+        + getType(): ContainerType
+        + getCurrentPort(): Port
+        + setId(id: String): void
+        + setWeight(weight: double): void
+        + setType(type: ContainerType): void
+        + setCurrentPort(currentPort: Port): void
+        + equals(o: Object): boolean
+        + hashCode(): int
+        + toString(): String
+    }
+
+    note top of Container
+    enum ContainerType {
+        DRY_STORAGE,
+        OPEN_TOP,
+        OPEN_SIDE,
+        REFRIGERATED,
+        LIQUID
+    }
+    end note
+
+    note top of Container
+    enum VehicleType {
+        SHIP,
+        TRUCK
+    }
+    end note
+
+
+
+abstract class Vehicle implements Serializable, VehicleAction {
+        - id: String
+        - vehicleType: String
+        - name: String
+        - currentFuel: double
+        - carryingCapacity: double
+        - remainingCapacity: double
+        - fuelCapacity: double
+        - currentPort: Port
+        - numberOfContainers: int
+        - listOfContainers: List<Container>
+        - containerCount: Map<Container.ContainerType, Integer>
+        + Vehicle(name: String, carryingCapacity: double, fuelCapacity: double, currentPort: Port)
+        + moveToPort(destinatedPort: Port): void
+        + refuel(): void
+        + unloadContainers(): void
+        + calculateRequiredFuel(destinatedPort: Port): double
+        + getName(): String
+        + setName(name: String): void
+        + getCurrentFuel(): double
+        + setCurrentFuel(currentFuel: double): void
+        + addCurrentFuel(amount: double): void
+        + getCarryingCapacity(): double
+        + setCarryingCapacity(carryingCapacity: double): void
+        + getFuelCapacity(): double
+        + setFuelCapacity(fuelCapacity: double): void
+        + getListOfContainers(): List<Container>
+        + getContainerCount(): Map<Container.ContainerType, Integer>
+        + getCurrentPort(): Port
+        + setCurrentPort(currentPort: Port): void
+        + getVehicleType(): String
+        + setVehicleType(vehicleType: String): void
+        + getId(): String
+        + getRemainingCapacity(): double
+        + setRemainingCapacity(remainingCapacity: double): void
+        + calculateRemainingCapacity(amount: double): void
+        + addRemainingCapacity(amount: double): void
+        + getNumberOfContainers(): int
+        + setNumberOfContainers(numberOfContainers: int): void
+        + addNumberOfContainers(number: int): void
+        + minusNumberOfContainer(number: int): void
+        + getContainersAsString(): String
+        + equals(obj: Object): boolean
+        + hashCode(): int
+        + toString(): String
+    }
+
+    class Ship extends Vehicle implements VehicleAction, Serializable {
+        - id: String
+        - COUNTER_FILE: String
+        - counter: int
+        + Ship(name: String, carryingCapacity: double, fuelCapacity: double, currentPort: Port)
+        - generateShipId(): String
+        - loadCounter(): int
+        + saveCounter(): void
+        + loadContainer(container: Container): boolean
+        + calculateRequiredFuel(destinationPort: Port): double
+    }
+
+    abstract class Truck extends Vehicle implements Serializable, VehicleAction {
+        - id: String
+        - COUNTER_FILE: String
+        - counter: int
+        + Truck(name: String, carryingCapacity: double, fuelCapacity: double, currentPort: Port)
+        - generateTruckId(): String
+        - loadCounter(): int
+        + saveCounter(): void
+        + loadContainer(container: Container): boolean
+        + isCompatible(container: Container): boolean
+        + calculateRequiredFuel(destinatedPort: Port): double
+        + moveToPort(destinatedPort: Port): void
+    }
+
+    class BasicTruck extends Truck implements Serializable {
+        + BasicTruck(name: String, carryingCapacity: double, fuelCapacity: double, currentPort: Port)
+        + isCompatible(container: Container): boolean
+    }
+
+    class ReeferTruck extends Truck implements Serializable {
+        + ReeferTruck(name: String, carryingCapacity: double, fuelCapacity: double, currentPort: Port)
+        + isCompatible(container: Container): boolean
+    }
+
+    class TankerTruck extends Truck implements Serializable {
+        + TankerTruck(name: String, carryingCapacity: double, fuelCapacity: double, currentPort: Port)
+        + isCompatible(container: Container): boolean
+    }
+
+    class Trip implements Serializable {
+        - id: String
+        - vehicle: Vehicle
+        - departureDate: LocalDate
+        - arrivalDate: LocalDate
+        - departurePort: Port
+        - destinatedPort: Port
+        - fuelConsumption: double
+        + Trip(vehicle: Vehicle, departureDate: LocalDate, departurePort: Port, destinatedPort: Port, fuelConsumption: double)
+        + getId(): String
+        + getVehicle(): Vehicle
+        + getDepartureDate(): LocalDate
+        + getArrivalDate(): LocalDate
+        + getDeparturePort(): Port
+        + getDestinatedPort(): Port
+        + getFuelConsumption(): double
+        + setArrivalDate(arrivalDate: LocalDate): void
+        + setDepartureDate(departureDate: LocalDate): void
+    }
+
+
+    class Manager implements Serializable {
+        - id: String
+        - username: String
+        - password: String
+        - controlPort: Port
+        + Manager(username: String, password: String, controlPort: Port)
+        + getUsername(): String
+        + setUsername(username: String): void
+        + getPassword(): String
+        + setPassword(password: String): void
+        + getControlPort(): Port
+        + setControlPort(controlPort: Port): void
+        + getId(): String
+    }
+
+    interface VehicleAction {
+      +loadContainer(container: Container): boolean
+    }
+}
+
+@enduml
